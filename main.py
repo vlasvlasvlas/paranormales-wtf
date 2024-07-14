@@ -1,16 +1,16 @@
 import os
-import json
 from dotenv import load_dotenv
 from functions import (
     download_audio_from_youtube,
     transcribe_audio,
     classify_story_with_examples,
     save_stories_to_db,
-    identify_story_timestamps
+    identify_story_timestamps,
+    split_audio_on_silence
 )
 
 # Cargar variables de entorno
-load_dotenv(".env", override=True)
+load_dotenv()
 
 # Variables de entorno
 AUDIO_FILE = 'audio.mp3'
@@ -19,9 +19,6 @@ PROMPT_EXAMPLES_FILE = 'prompt_examples.json'
 VIDEOS_FILE = 'videos.json'
 
 def main():
-    """
-    Procesa los videos de YouTube y guarda las historias en una base de datos.
-    """
     try:
         # Leer URLs de videos desde el archivo JSON
         with open(VIDEOS_FILE, 'r') as f:
@@ -35,17 +32,21 @@ def main():
             # Descargar y extraer audio
             download_audio_from_youtube(youtube_url, AUDIO_FILE)
 
-            # Transcribir audio a texto
-            text, timestamps = transcribe_audio(AUDIO_FILE)
+            # Dividir el audio en segmentos basados en el silencio
+            segment_files = split_audio_on_silence(AUDIO_FILE)
 
-            # Clasificar historias
-            classified_stories = classify_story_with_examples(text, PROMPT_EXAMPLES_FILE)
+            for segment_file in segment_files:
+                # Transcribir audio a texto
+                text, timestamps = transcribe_audio(segment_file)
 
-            # Identificar timestamps de las historias
-            identified_stories = identify_story_timestamps(classified_stories, timestamps)
+                # Clasificar historias
+                classified_stories = classify_story_with_examples(text, PROMPT_EXAMPLES_FILE)
 
-            # Guardar en la base de datos
-            save_stories_to_db(identified_stories, DB_FILE)
+                # Identificar timestamps de las historias
+                identified_stories = identify_story_timestamps(classified_stories, timestamps)
+
+                # Guardar en la base de datos
+                save_stories_to_db(identified_stories, DB_FILE)
         
         print("Proceso completado exitosamente.")
     except Exception as e:

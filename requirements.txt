@@ -2,3 +2,4 @@ youtube-dl
 openai-whisper
 openai
 python-dotenv
+pydub

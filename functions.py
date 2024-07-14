@@ -4,6 +4,8 @@ import whisper
 import json
 import openai
 import sqlite3
+from pydub import AudioSegment
+from pydub.silence import split_on_silence
 
 def download_audio_from_youtube(youtube_url, output_file):
     """
@@ -39,6 +41,29 @@ def transcribe_audio(audio_file):
     text = result['text']
     timestamps = result['segments']
     return text, timestamps
+
+def split_audio_on_silence(audio_file, silence_thresh=-40, min_silence_len=1000, keep_silence=500):
+    """
+    Divide el audio en segmentos basados en la detección de silencios largos.
+    Parametros:
+    audio_file (str): Nombre del archivo de audio.
+    silence_thresh (int): Umbral de silencio para la detección.
+    min_silence_len (int): Longitud mínima de silencio para considerar un corte.
+    keep_silence (int): Cantidad de silencio a mantener en cada segmento.
+    
+    Retorna:
+    segment_files (list): Lista de archivos de segmentos de audio.
+    """
+    audio = AudioSegment.from_mp3(audio_file)
+    segments = split_on_silence(audio, silence_thresh=silence_thresh, min_silence_len=min_silence_len, keep_silence=keep_silence)
+    
+    segment_files = []
+    for i, segment in enumerate(segments):
+        segment_file = f"segment_{i}.mp3"
+        segment.export(segment_file, format="mp3")
+        segment_files.append(segment_file)
+    
+    return segment_files
 
 def classify_story_with_examples(text, examples_file):
     """
