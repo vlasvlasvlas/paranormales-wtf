@@ -1,0 +1,29 @@
+
+{
+    "examples": [
+        {
+            "story": "Una vez, vi un perro que llevaba gafas de sol y parecía estar hablando por teléfono. Fue muy gracioso porque el perro incluso ladraba en el momento adecuado, como si realmente estuviera teniendo una conversación.",
+            "classification": "absurdamente graciosa"
+        },
+        {
+            "story": "Un amigo mío me contó que una noche su gato empezó a cantar como si fuera un cantante de ópera. Todo el vecindario quedó impresionado, y hasta recibió una oferta para unirse a un grupo de música.",
+            "classification": "absurdamente graciosa"
+        },
+        {
+            "story": "Una noche, vi una sombra extraña en la esquina de mi habitación. Cuando me acerqué, desapareció sin dejar rastro.",
+            "classification": "paranormal bizarra"
+        },
+        {
+            "story": "Mientras caminaba por el parque, sentí una brisa fría aunque era pleno verano. Luego, escuché un susurro que decía mi nombre.",
+            "classification": "paranormal bizarra"
+        },
+        {
+            "story": "El otro día, vi a una paloma que estaba intentando subirse a un autobús. Esperó en la parada y todo.",
+            "classification": "normal"
+        },
+        {
+            "story": "Una vez, en el trabajo, mi computadora se apagó sola sin razón aparente. Cuando la encendí de nuevo, todo estaba normal.",
+            "classification": "normal"
+        }
+    ]
+}
