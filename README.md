@@ -2,6 +2,8 @@
 
 Este proyecto toma videos de YouTube del canal "La Noche Paranormal", extrae el audio, lo transcribe a texto y clasifica las historias en diferentes categorías usando un modelo de lenguaje LLM (en este caso, Llama 3 con few-shot learning).
 
+![alt text](image.png)
+
 ## Para Qué Es Esto o Por Qué Hago Esto
 Me encantan las historias rarísimas que cuentan en "La Noche Paranormal" y me cuesta mucho encontrarlas. Así que hice esto para poder encontrarlas más a mano, de manera más simple. Además, quiero poner en práctica el encadenamiento de modelos de diferentes tipos (video > audio > texto > identificación).
 
@@ -60,7 +62,7 @@ Me encantan las historias rarísimas que cuentan en "La Noche Paranormal" y me c
     ```bash
     python main.py
     ```
-    
+
 3. Las historias clasificadas se guardarán en `stories.db`.
 
 ## Estructura del Proyecto
