@@ -2,7 +2,7 @@
 
 Buscador de historias paranormales del programa **"La Noche Paranormal"** con clasificación automática y links directos a YouTube.
 
-![Paranormales.WTF](image.png)
+![Paranormales.WTF Web](web_screenshot.png)
 
 ## ¿Qué hace?
 
