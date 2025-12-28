@@ -1,81 +1,128 @@
-# Paranormales-WTF: Clasificación de Historias Paranormales Misteriosamente Absurdas y Divertidas
+# 🔮 Paranormales.WTF
 
-Este proyecto toma videos de YouTube del canal "La Noche Paranormal", extrae el audio, lo transcribe a texto y clasifica las historias en diferentes categorías usando un modelo de lenguaje LLM (en este caso, Llama 3 con few-shot learning).
+Buscador de historias paranormales del programa **"La Noche Paranormal"** con clasificación automática y links directos a YouTube.
 
-![alt text](image.png)
+![Paranormales.WTF](image.png)
 
-## Para Qué Es Esto o Por Qué Hago Esto
+## ¿Qué hace?
 
-Me encantan las historias rarísimas que cuentan en "La Noche Paranormal" y me cuesta mucho encontrarlas. Así que hice esto para poder encontrarlas más a mano, de manera más simple. Además, quiero poner en práctica el encadenamiento de modelos de diferentes tipos (video > audio > texto > identificación).
-
-## Paso a Paso: La Cadena de Proceso
-
-1. **Descargar Audio de YouTube**: Se utiliza `youtube-dl` para descargar el video de YouTube y extraer el audio en formato MP3.
-2. **Dividir Audio en Segmentos**: Utiliza `pydub` para dividir el audio en segmentos basados en pausas largas.
-3. **Transcribir Audio a Texto**: Se emplea `Whisper de OpenAI` para convertir el audio en texto, identificando los timestamps.
-4. **Clasificar Historias**: Utilizando GPT-4 o Llama 3 con ejemplos de few-shot learning, se clasifican las historias en "misteriosamente absurdas y divertidas", "paranormal bizarra" o "normal".
-5. **Identificar Timestamps**: Se asocian los timestamps de las transcripciones con las historias clasificadas para poder ubicarlas en el video original.
-6. **Guardar en la Base de Datos**: Las historias clasificadas junto con sus timestamps se almacenan en una base de datos SQLite (`stories.db`) para un acceso y gestión fáciles.
-
-## Requisitos
-
-- Python 3.7+
-- youtube-dl
-- pydub
-- Whisper de OpenAI
-- OpenAI GPT-4 o Llama 3
-- dotenv
+1. **Extrae subtítulos** de YouTube (sin descargar audio)
+2. **Detecta historias** automáticamente con patrones
+3. **Permite clasificar** manualmente con un CLI interactivo
+4. **Web de búsqueda** con filtros por categoría y WTF score
 
 ## Instalación
 
-1. Clonar el repositorio.
-2. Crear un archivo `requirements.txt` con el siguiente contenido:
-    ```text
-    youtube-dl
-    pydub
-    openai-whisper
-    openai
-    python-dotenv
-    ```
-3. Instalar las dependencias:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4. Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
-    ```
-    OPENAI_API_KEY=your_openai_api_key
-    ```
+```bash
+git clone https://github.com/usuario/paranormales-wtf.git
+cd paranormales-wtf
+pip install -r requirements.txt
+```
 
-## Uso
+## Uso rápido
 
-1. Colocar las URLs de los videos de YouTube en el archivo `videos.json` con el formato:
-    ```json
-    [
-        {
-            "url": "https://www.youtube.com/watch?v=9XvvBI9Zols",
-            "fecha": "2024-07-11"
-        },
-        {
-            "url": "https://www.youtube.com/watch?v=4lzhpXm3IHA",
-            "fecha": "2024-07-10"
-        }
-    ]
-    ```
-2. Ejecutar el script principal:
-    ```bash
-    python main.py
-    ```
-3. Las historias clasificadas se guardarán en `stories.db`.
+### Ver estado del pipeline
+```bash
+python3 scripts/run_pipeline.py status
+```
 
-## Estructura del Proyecto
+### Procesar un video nuevo
+```bash
+# 1. Agregar URL a data/videos_input.json
+# 2. Descargar subtítulos
+python3 src/ingestor.py
 
-- `main.py`: Script principal que coordina todas las funciones.
-- `functions.py`: Contiene todas las funciones compartimentadas.
-- `prompt_examples.json`: Archivo JSON que contiene los ejemplos para few-shot learning.
-- `videos.json`: Archivo JSON que contiene las URLs de los videos de YouTube y sus fechas.
-- `.env`: Archivo para almacenar variables de entorno.
-- `README.md`: Instrucciones y descripción del proyecto.
+# 3. Detectar historias
+python3 src/segmenter.py VIDEO_ID
 
-## Identificación de Timestamps
+# 4. Clasificar manualmente
+python3 scripts/supervise.py VIDEO_ID
 
-Al final, quisiera identificar los timestamps de las historias para poder escucharlas en el video original pasando el parámetro `?t=` al clip de YouTube y poder escucharlas directamente. Esto no está todavía en la agenda y podrían ayudarme con eso.
+# 5. Exportar a la web
+python3 scripts/export_web.py
+```
+
+### Ver la web localmente
+```bash
+cd web && python3 -m http.server 8080
+# Abrir http://localhost:8080
+```
+
+## Estructura del proyecto
+
+```
+paranormales-wtf/
+├── data/
+│   ├── videos_input.json       # Videos a procesar
+│   ├── pipeline_status.json    # Estado del pipeline
+│   ├── subtitulos/             # Subtítulos crudos
+│   ├── segmentacion/           # Historias detectadas
+│   └── dataset_gold.json       # Clasificaciones verificadas
+├── src/
+│   ├── ingestor.py             # Extrae subtítulos de YouTube
+│   ├── segmenter.py            # Detecta inicio/fin de historias
+│   └── db.py                   # Base de datos SQLite
+├── scripts/
+│   ├── run_pipeline.py         # Script maestro
+│   ├── supervise.py            # CLI de clasificación
+│   └── export_web.py           # Exporta a la web
+├── web/
+│   ├── index.html              # Página principal
+│   ├── css/styles.css          # Estilos (tema oscuro)
+│   ├── js/app.js               # Lógica de búsqueda
+│   └── data/historias.json     # Datos para la web
+└── config.yaml                 # Configuración
+```
+
+## Categorías de clasificación
+
+| Categoría | Emoji | Ejemplos |
+|-----------|-------|----------|
+| Fantasmas | 👻 | Cementerios, casas, apariciones |
+| OVNIs | 👽 | Avistamientos, abducciones |
+| Criaturas | 🐺 | Lobisón, duendes, sombras |
+| Premoniciones | 🔮 | Sueños, presentimientos |
+| Brujería | 🕯️ | Posesiones, embrujos |
+| Otros | ❓ | Inclasificables |
+
+## WTF Score
+
+El **WTF Score** (0.0 - 1.0) mide qué tan bizarra es una historia:
+
+- **0.0 - 0.3**: Normal, creíble
+- **0.4 - 0.6**: Interesante, algo extraño
+- **0.7 - 0.8**: Muy raro, difícil de creer
+- **0.9 - 1.0**: WTF total, absurdo nivel máximo
+
+## Tecnologías
+
+- **Python 3.8+**
+- **youtube-transcript-api** - Subtítulos de YouTube
+- **SQLite + FTS5** - Base de datos con búsqueda full-text
+- **Vanilla JS** - Web sin frameworks
+- **GitHub Pages** - Hosting (próximamente)
+
+## Roadmap
+
+- [x] Extracción de subtítulos de YouTube
+- [x] Segmentación automática de historias
+- [x] CLI de clasificación manual
+- [x] Web de búsqueda con filtros
+- [ ] Modelos supervisados (XGBoost/LightGBM)
+- [ ] Deploy en GitHub Pages
+
+## Contribuir
+
+¡PRs bienvenidos! Especialmente para:
+- Agregar más videos al dataset
+- Mejorar los patrones de detección
+- Entrenar modelos de clasificación
+
+## Créditos
+
+- Contenido: [La Noche Paranormal](https://www.youtube.com/@lanocheparanormal)
+- Este proyecto es **fan-made** y no almacena audio ni video
+
+---
+
+Hecho con 👻 para fans del programa

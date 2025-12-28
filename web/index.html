@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paranormales.WTF - Buscador de Historias de La Noche Paranormal</title>
+    <meta name="description" content="Encuentra y escucha las historias más bizarras del programa La Noche Paranormal. Fantasmas, OVNIs, criaturas y más.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Paranormales.WTF">
+    <meta property="og:description" content="Las historias más WTF de La Noche Paranormal">
+    <meta property="og:type" content="website">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__logo">
+            <span class="header__icon">🔮</span>
+            <h1 class="header__title">PARANORMALES.WTF</h1>
+        </div>
+        <p class="header__tagline">Buscador de historias del más allá</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Search -->
+        <section class="search-section">
+            <div class="search-bar">
+                <span class="search-bar__icon">🔍</span>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-bar__input" 
+                    placeholder="Buscar historias..."
+                    autocomplete="off"
+                >
+                <button id="clearSearch" class="search-bar__clear" hidden>✕</button>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters-section">
+            <div class="filters">
+                <!-- Categories -->
+                <div class="filter-group">
+                    <h3 class="filter-group__title">Categorías</h3>
+                    <div class="category-buttons" id="categoryButtons">
+                        <button class="category-btn active" data-category="all">
+                            <span class="category-btn__icon">📚</span>
+                            <span class="category-btn__label">Todas</span>
+                            <span class="category-btn__count" id="countAll">0</span>
+                        </button>
+                        <button class="category-btn" data-category="fantasmas">
+                            <span class="category-btn__icon">👻</span>
+                            <span class="category-btn__label">Fantasmas</span>
+                            <span class="category-btn__count" id="countFantasmas">0</span>
+                        </button>
+                        <button class="category-btn" data-category="ovnis">
+                            <span class="category-btn__icon">👽</span>
+                            <span class="category-btn__label">OVNIs</span>
+                            <span class="category-btn__count" id="countOvnis">0</span>
+                        </button>
+                        <button class="category-btn" data-category="criaturas">
+                            <span class="category-btn__icon">🐺</span>
+                            <span class="category-btn__label">Criaturas</span>
+                            <span class="category-btn__count" id="countCriaturas">0</span>
+                        </button>
+                        <button class="category-btn" data-category="premoniciones">
+                            <span class="category-btn__icon">🔮</span>
+                            <span class="category-btn__label">Premoniciones</span>
+                            <span class="category-btn__count" id="countPremoniciones">0</span>
+                        </button>
+                        <button class="category-btn" data-category="otros">
+                            <span class="category-btn__icon">❓</span>
+                            <span class="category-btn__label">Otros</span>
+                            <span class="category-btn__count" id="countOtros">0</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- WTF Slider -->
+                <div class="filter-group">
+                    <h3 class="filter-group__title">Nivel de WTF</h3>
+                    <div class="wtf-slider">
+                        <input 
+                            type="range" 
+                            id="wtfSlider" 
+                            class="wtf-slider__input"
+                            min="0" 
+                            max="100" 
+                            value="0"
+                        >
+                        <div class="wtf-slider__labels">
+                            <span>Normal</span>
+                            <span class="wtf-slider__value" id="wtfValue">0.0+</span>
+                            <span>WTF Total</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <section class="tabs-section">
+            <nav class="tabs">
+                <button class="tab active" data-sort="random">🎲 Random</button>
+                <button class="tab" data-sort="wtf">🔥 Top WTF</button>
+                <button class="tab" data-sort="recent">🕐 Recientes</button>
+                <button class="tab" data-sort="all">📝 Todas</button>
+            </nav>
+            <div class="results-count">
+                <span id="resultsCount">0</span> historias
+            </div>
+        </section>
+
+        <!-- Stories Grid -->
+        <section class="stories-section">
+            <div class="stories-grid" id="storiesGrid">
+                <!-- Loading skeleton -->
+                <div class="story-card story-card--skeleton">
+                    <div class="skeleton skeleton--title"></div>
+                    <div class="skeleton skeleton--text"></div>
+                    <div class="skeleton skeleton--text"></div>
+                    <div class="skeleton skeleton--button"></div>
+                </div>
+            </div>
+            
+            <!-- Empty state -->
+            <div class="empty-state" id="emptyState" hidden>
+                <span class="empty-state__icon">👻</span>
+                <h3 class="empty-state__title">No se encontraron historias</h3>
+                <p class="empty-state__text">Probá con otros filtros o términos de búsqueda</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer__text">
+            Paranormales.WTF es un proyecto fan-made que indexa historias del programa 
+            <a href="https://www.youtube.com/@lanocheparanormal" target="_blank" rel="noopener">La Noche Paranormal</a>.
+            No almacenamos audio ni video. Todos los derechos del contenido pertenecen a sus creadores.
+        </p>
+        <p class="footer__credits">
+            Hecho con 👻 por fans del programa
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

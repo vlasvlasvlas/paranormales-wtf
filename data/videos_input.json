@@ -1,0 +1,15 @@
+{
+    "canal": "La Noche Paranormal",
+    "canal_url": "https://www.youtube.com/@lanocheparanormal",
+    "videos": [
+        {
+            "video_id": "n2BkstRXbV0",
+            "url": "https://www.youtube.com/watch?v=n2BkstRXbV0",
+            "fecha_emision": "2024-12-18",
+            "titulo": "Programa del 18 de diciembre 2024",
+            "duracion_minutos": 146,
+            "estado": "subtitulos_descargados",
+            "notas": "Primer video de prueba"
+        }
+    ]
+}

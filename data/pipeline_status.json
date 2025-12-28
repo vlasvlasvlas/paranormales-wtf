@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "ultima_actualizacion": "2025-12-28T11:48:38.306193",
+  "videos": [
+    {
+      "video_id": "n2BkstRXbV0",
+      "url": "https://www.youtube.com/watch?v=n2BkstRXbV0",
+      "titulo": "Programa 18 Dic 2024",
+      "fecha_emision": "2024-12-18",
+      "estado": {
+        "subtitulos": "completado",
+        "segmentacion": "completado",
+        "clasificacion_llm": "pendiente",
+        "supervision_humana": "pendiente",
+        "exportado_web": "pendiente"
+      },
+      "metricas": {
+        "total_segmentos_subtitulos": 3376,
+        "duracion_minutos": 146,
+        "historias_detectadas": 30,
+        "historias_supervisadas": 0,
+        "historias_pendientes": 30
+      },
+      "archivos": {
+        "subtitulos": "data/subtitulos/n2BkstRXbV0.json",
+        "segmentacion": "data/segmentacion/n2BkstRXbV0.json",
+        "clasificacion": "data/clasificacion/n2BkstRXbV0.json"
+      },
+      "timestamps": {
+        "subtitulos_descargados": "2024-12-27T17:00:00",
+        "segmentacion_completada": "2025-12-28T11:48:38.306190",
+        "clasificacion_llm": null,
+        "ultima_supervision": null
+      }
+    }
+  ],
+  "resumen_global": {
+    "total_videos": 1,
+    "total_historias": 30,
+    "historias_supervisadas": 0,
+    "modelo_entrenado": false,
+    "ultima_fecha_entrenamiento": null
+  }
+}

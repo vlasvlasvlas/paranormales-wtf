@@ -1,5 +1,22 @@
-youtube-dl
-openai-whisper
-openai
-python-dotenv
-pydub
+# Core
+youtube-transcript-api>=1.2.0
+pyyaml>=6.0
+
+# Database
+# sqlite3 is built-in
+
+# ML/NLP (para siguiente fase)
+# sentence-transformers>=2.2.0
+# xgboost>=2.0.0
+# catboost>=1.2.0
+# scikit-learn>=1.3.0
+
+# LLM providers (opcional)
+# openai>=1.0.0
+# ollama>=0.1.0
+
+# Web classifier UI (opcional)
+# streamlit>=1.28.0
+
+# Dev
+python-dotenv>=1.0.0

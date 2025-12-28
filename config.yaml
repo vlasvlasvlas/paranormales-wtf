@@ -1,0 +1,98 @@
+# Configuración del proyecto Paranormales-WTF
+
+# === EXTRACCIÓN DE SUBTÍTULOS ===
+subtitles:
+  languages: ["es", "es-419", "es-ES"]
+  output_dir: "data/subtitulos"
+
+# === SEGMENTACIÓN ===
+segmentation:
+  # Patrones para detectar publicidad/transiciones
+  patterns_publicidad:
+    - "volvemos después"
+    - "ya regresamos"
+    - "pausa comercial"
+    - "nuestros auspiciantes"
+  
+  patterns_inicio_historia:
+    - "me escribe \\w+ de \\w+"
+    - "bueno.*ahora"
+    - "vamos con otra"
+    - "les cuento"
+    - "la siguiente historia"
+
+# === CLASIFICACIÓN ===
+classification:
+  # Categorías principales
+  categorias:
+    - fantasmas
+    - ovnis
+    - criaturas
+    - premoniciones
+    - experiencias_misticas
+    - fenomenos_fisicos
+    - brujeria
+    - otros
+  
+  # Subcategorías por categoría
+  subcategorias:
+    fantasmas:
+      - apariciones_familiares
+      - casas_embrujadas
+      - cementerios
+      - objetos_embrujados
+    ovnis:
+      - avistamientos
+      - abducciones
+      - encuentros_cercanos
+    criaturas:
+      - lobizones
+      - duendes
+      - la_llorona
+      - criaturas_desconocidas
+    premoniciones:
+      - suenos_profeticos
+      - presentimientos
+    experiencias_misticas:
+      - viajes_astrales
+      - vidas_pasadas
+      - experiencias_cercanas_muerte
+    fenomenos_fisicos:
+      - poltergeist
+      - luces_extranas
+      - ruidos_inexplicables
+    brujeria:
+      - maldiciones
+      - trabajos
+      - posesiones
+    otros:
+      - inclasificable
+  
+  # Tipos de narrador
+  tipos_narrador:
+    - oyente
+    - conductor
+    - invitado
+
+# === MODELOS ===
+models:
+  # LLM para segmentación
+  llm:
+    provider: "ollama"  # ollama | openai | groq
+    model: "llama3.1:8b"
+    # openai_model: "gpt-4o-mini"
+    # groq_model: "llama-3.1-70b-versatile"
+  
+  # Embeddings para búsqueda semántica
+  embeddings:
+    model: "all-MiniLM-L6-v2"
+    dimension: 384
+
+# === BASE DE DATOS ===
+database:
+  path: "data/historias.db"
+  
+# === WEB ===
+web:
+  output_dir: "web/data"
+  export_file: "historias.json"
